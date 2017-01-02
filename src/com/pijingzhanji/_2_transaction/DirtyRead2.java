@@ -1,4 +1,4 @@
-package com.pijingzhanji.transaction;
+package com.pijingzhanji._2_transaction;
 
 import java.math.BigDecimal;
 

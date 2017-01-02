@@ -1,4 +1,4 @@
-package com.pijingzhanji.sync;
+package com.pijingzhanji._1_sync;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

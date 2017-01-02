@@ -1,4 +1,4 @@
-package com.pijingzhanji.sync;
+package com.pijingzhanji._1_sync;
 
 /**
  * @author : 披荆斩棘
