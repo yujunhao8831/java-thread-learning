@@ -8,6 +8,12 @@ import java.util.concurrent.CountDownLatch;
  */
 public class CountDownLatchDemo {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // CountDownLatch 适用场景 : 
+    // 多个线程初始化多个不同的业务
+    ///////////////////////////////////////////////////////////////////////////
+    
+
     public static void main ( String[] args ) {
         CountDownLatch countDownLatch = new CountDownLatch( 2 );
 

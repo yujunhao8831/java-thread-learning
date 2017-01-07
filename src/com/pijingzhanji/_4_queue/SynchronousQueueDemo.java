@@ -12,14 +12,7 @@ public class SynchronousQueueDemo {
 
 
         new Thread( () -> {
-            try {
-                System.err.println( "queue =  " + queue.take() );
-            } catch ( InterruptedException e ) {
-                e.printStackTrace();
-            }
-        } ).start();
-
-        new Thread( () -> {
+            System.err.println( "1" );
             try {
                 queue.put( "111" );
             } catch ( InterruptedException e ) {
@@ -27,6 +20,13 @@ public class SynchronousQueueDemo {
             }
             System.err.println( "queue =  " + queue );
         } ).start();
+
+        new Thread( () -> {
+            System.err.println( "2" );
+                System.err.println( "queue =  " + queue.poll() );
+        } ).start();
+
+       
 
 
        
