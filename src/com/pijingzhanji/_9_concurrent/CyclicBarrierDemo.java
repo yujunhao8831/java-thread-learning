@@ -1,9 +1,6 @@
 package com.pijingzhanji._9_concurrent;
 
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author : 披荆斩棘
@@ -18,10 +15,8 @@ public class CyclicBarrierDemo {
     // 集齐10个人后,就可以进行下单,并且是同时进行的
     /////////////////////////////////////////////////////////////////////////
 
-
     public static void main ( String[] args ) {
         CyclicBarrier cyclicBarrier = new CyclicBarrier( 3 );
-
         final ExecutorService service = Executors.newFixedThreadPool( 3 );
         service.submit( () -> {
             try {
@@ -62,9 +57,8 @@ public class CyclicBarrierDemo {
             }
             System.err.println( "3 开始运行" );
         } );
-
+        
         service.shutdown();
-
 
     }
 }

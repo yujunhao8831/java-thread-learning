@@ -10,14 +10,39 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SynchronizedWhy {
 
 
-    private              int    count       = 0;
     private final static String A           = "A";
     private final static String B           = "B";
-    private              Object object      = new Object();
     private final static Object LOCK_STATIC = new Object();
-    private              Lock   lock        = new ReentrantLock();
     private final static Lock   LOCK        = new ReentrantLock();
+    private              int    count       = 0;
+    private              Object object      = new Object();
+    private              Lock   lock        = new ReentrantLock();
 
+    ///////////////////////////////////////////////////////////////////////////
+    // 正确输出结果
+    // A set count
+    // input = A,count = 999
+    // B set count
+    // input = B,count = 111
+    ///////////////////////////////////////////////////////////////////////////
+
+
+    // 还有就是 synchronized static 这样输出也是正确的
+    private synchronized static void printCount8 ( String input ) {
+    }
+
+    public static void main ( String[] args ) {
+        SynchronizedWhy s1 = new SynchronizedWhy();
+        SynchronizedWhy s2 = new SynchronizedWhy();
+        Thread thread1 = new Thread( ( ( Runnable ) () -> {
+            s1.printCount5( A );
+        } ) );
+        Thread thread2 = new Thread( ( ( Runnable ) () -> {
+            s2.printCount5( B );
+        } ) );
+        thread1.start();
+        thread2.start();
+    }
 
     private void print ( String input ) {
         try {
@@ -34,15 +59,6 @@ public class SynchronizedWhy {
             e.printStackTrace();
         }
     }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // 正确输出结果
-    // A set count
-    // input = A,count = 999
-    // B set count
-    // input = B,count = 111
-    ///////////////////////////////////////////////////////////////////////////
-
 
     /**
      * 该方法输出结果(错误)
@@ -104,7 +120,6 @@ public class SynchronizedWhy {
         }
     }
 
-
     /**
      * 该方法输出结果(正确)
      * A set count
@@ -115,6 +130,7 @@ public class SynchronizedWhy {
      * @param input
      */
     private void printCount5 ( String input ) {
+        final Lock LOCK = this.LOCK;
         try {
             LOCK.lock();
             print( input );
@@ -158,36 +174,14 @@ public class SynchronizedWhy {
      */
     private void printCount7 ( String input ) {
         try {
-            // 错误写法,这lock不是static
             lock.lock();
+            // 错误写法,这lock不是static
             print( input );
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
-    }
-
-
-    // 还有就是 synchronized static 这样输出也是正确的
-    private synchronized static void printCount8 ( String input ) {
-
-    }
-
-
-    public static void main ( String[] args ) {
-        SynchronizedWhy s1 = new SynchronizedWhy();
-        SynchronizedWhy s2 = new SynchronizedWhy();
-
-        Thread thread1 = new Thread( ( ( Runnable ) () -> {
-            s1.printCount7( A );
-        } ) );
-
-        Thread thread2 = new Thread( ( ( Runnable ) () -> {
-            s2.printCount7( B );
-        } ) );
-        thread1.start();
-        thread2.start();
     }
 
 
