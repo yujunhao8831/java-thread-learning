@@ -23,6 +23,7 @@ public class WaitAndNotify {
 
         Object lock = new Object();
 
+
         Thread thread1 = new Thread( () -> {
             synchronized ( lock ) {
                 for ( int i = 0 ; i < 10 ; i++ ) {
@@ -47,6 +48,7 @@ public class WaitAndNotify {
                 if ( waitAndNotify.size() != 5 ) {
                     try {
                         System.err.println( "wait ing" ); // 此时 lock 已经配释放,而该线程在等待中
+                        
                         lock.wait();
                     } catch ( InterruptedException e ) {
                         e.printStackTrace();
@@ -56,9 +58,10 @@ public class WaitAndNotify {
                 throw new RuntimeException();
             }
         }, "线程2" );
-
+        
         thread2.start();
         thread1.start();
+
 
     }
 
